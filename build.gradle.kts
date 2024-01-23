@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.springframework.boot.gradle.tasks.bundling.BootJar
 import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
@@ -86,17 +85,6 @@ subprojects {
     }
 
 
-    tasks.withType<BootJar> {
-        group = "build"
-        dependsOn("api:presentation:bootJar")
-        doLast {
-            ant.withGroovyBuilder {
-                val jarPath = "${rootProject.buildDir}/../api/build/libs/app.jar"
-                val jarDestination = "${rootProject.buildDir}/libs"
-                "move"("file" to jarPath, "todir" to jarDestination)
-            }
-        }
-    }
 
     tasks.withType<BootRun> {
         group = "application"
