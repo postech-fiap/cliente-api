@@ -6,6 +6,6 @@ import java.util.*
 interface ClienteRepository {
 
     fun salvar(cliente: Cliente): Cliente
-    fun buscarPorCpf(cpf: String): Cliente?
+    fun buscarPorCpf(cpf: String): Optional<Cliente>
     fun buscarPorId(id: Long): Optional<Cliente>
 }

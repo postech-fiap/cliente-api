@@ -20,10 +20,14 @@ spec:
           ports:
             - containerPort: 80
           env:
-            - name: MONGO_DB_HOST
-              value: mysql.host
-            - name: MONGO_DB_NAME
-              value: "clientes"
+            - name: DATABASE_MONGO_HOST
+              value: "production-mongo-service"
+            - name: DATABASE_MONGO_PORT
+              value: "27017"
+            - name: DATABASE_MONGO_USERNAME
+              value: "root"
+            - name: DATABASE_MONGO_PASSWORD
+              value: "123"
           readinessProbe:
             httpGet:
               path: /ping
