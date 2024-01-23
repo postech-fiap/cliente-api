@@ -3,7 +3,6 @@ package br.com.fiap.cliente.api.config.interceptors
 import br.com.fiap.cliente.domain.exceptions.BusinessException
 import br.com.fiap.cliente.domain.exceptions.RecursoJaExisteException
 import br.com.fiap.cliente.domain.exceptions.RecursoNaoEncontradoException
-import br.com.fiap.gerenciamentopedidos.domain.exceptions.*
 import br.com.fiap.cliente.infrastructure.exceptions.BaseDeDadosException
 import org.springframework.beans.BeanInstantiationException
 import org.springframework.http.*

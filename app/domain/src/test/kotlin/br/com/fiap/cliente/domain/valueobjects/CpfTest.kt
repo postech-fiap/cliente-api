@@ -1,5 +1,8 @@
 package br.com.fiap.cliente.domain.valueobjects
 
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
+
 
 class CpfTest {
 
