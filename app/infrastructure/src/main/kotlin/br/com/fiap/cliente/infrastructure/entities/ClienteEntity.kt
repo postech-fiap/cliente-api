@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document
 data class ClienteEntity(
 
     @Id
-    val id: Long? = null,
+    val id: String? = null,
 
     val cpf: String? = null,
 

@@ -5,7 +5,7 @@ import br.com.fiap.cliente.domain.valueobjects.Cpf
 import br.com.fiap.cliente.domain.valueobjects.Email
 
 data class Cliente(
-    val id: Long? = null,
+    val id: String? = null,
     val cpf: Cpf? = null,
     val nome: String? = null,
     val email: Email? = null
