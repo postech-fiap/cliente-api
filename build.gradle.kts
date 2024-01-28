@@ -134,7 +134,7 @@ kover {
 }
 
 val includeCoverage = listOf(
-    "br.com.fiap.gerenciamentopedidos.*",
+    "br.com.fiap.cliente.*",
 )
 
 val excludeCoverage = listOf(
