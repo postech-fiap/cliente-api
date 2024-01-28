@@ -57,13 +57,13 @@ class ClienteRepositoryImplTest {
         val cliente = Cliente(cpf = Cpf(cpf), email = Email(email), nome = nome)
         val cpfSemMascara = Cpf.removeMascara(cpf)
 
-        every { clienteJpaRepository.findByCpf(any()) } returns ClienteEntity.fromModel(cliente)
+        every { clienteJpaRepository.findByCpf(any()) } returns Optional.of(ClienteEntity.fromModel(cliente))
 
         //when
         val result = clienteRepository.buscarPorCpf(cpf)
 
         //then
-        assertEquals(cliente, result)
+        assertEquals(cliente, result.get())
 
         verify(exactly = 1) { clienteJpaRepository.findByCpf(cpfSemMascara) }
     }
