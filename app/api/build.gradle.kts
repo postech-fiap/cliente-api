@@ -9,4 +9,6 @@ dependencies {
     testImplementation("io.cucumber:cucumber-spring:7.15.0")
     testImplementation("io.cucumber:cucumber-java8:7.15.0")
     testImplementation("io.rest-assured:rest-assured:5.4.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+
 }
