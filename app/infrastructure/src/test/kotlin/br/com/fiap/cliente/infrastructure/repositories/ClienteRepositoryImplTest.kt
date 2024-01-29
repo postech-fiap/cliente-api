@@ -46,8 +46,8 @@ class ClienteRepositoryImplTest {
         assertEquals(cliente, result)
         assertEquals(cliente.id, result.id)
         assertEquals(cliente.nome, result.nome)
-        assertEquals(cliente.cpf?.numero, result.cpf)
-        assertEquals(cliente.email?.endereco, result.email)
+        assertEquals(cliente.cpf, result.cpf)
+        assertEquals(cliente.email, result.email)
 
         verify(exactly = 1) { clienteJpaRepository.save(any()) }
     }
@@ -70,8 +70,8 @@ class ClienteRepositoryImplTest {
         assertEquals(cliente, result.get())
         assertEquals(cliente.id, result.get().id)
         assertEquals(cliente.nome, result.get().nome)
-        assertEquals(cliente.cpf?.numero, result.get().cpf)
-        assertEquals(cliente.email?.endereco, result.get().email)
+        assertEquals(cliente.cpf, result.get().cpf)
+        assertEquals(cliente.email, result.get().email)
 
         verify(exactly = 1) { clienteJpaRepository.findByCpf(cpfSemMascara) }
     }
@@ -94,8 +94,8 @@ class ClienteRepositoryImplTest {
         assertEquals(cliente, result.get())
         assertEquals(cliente.id, result.get().id)
         assertEquals(cliente.nome, result.get().nome)
-        assertEquals(cliente.cpf?.numero, result.get().id)
-        assertEquals(cliente.email?.endereco, result.get().id)
+        assertEquals(cliente.cpf, result.get().cpf)
+        assertEquals(cliente.email, result.get().email)
 
 
         verify(exactly = 1) { clienteJpaRepository.findById(clienteId.toLong()) }
