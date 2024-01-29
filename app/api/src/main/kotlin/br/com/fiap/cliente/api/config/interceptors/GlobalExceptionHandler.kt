@@ -1,11 +1,14 @@
 package br.com.fiap.cliente.api.config.interceptors
 
-import br.com.fiap.cliente.domain.exceptions.BusinessException
 import br.com.fiap.cliente.domain.exceptions.RecursoJaExisteException
 import br.com.fiap.cliente.domain.exceptions.RecursoNaoEncontradoException
 import br.com.fiap.cliente.infrastructure.exceptions.BaseDeDadosException
 import org.springframework.beans.BeanInstantiationException
-import org.springframework.http.*
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatusCode
+import org.springframework.http.ProblemDetail
+import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -41,13 +44,6 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         val problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.message)
         problemDetail.title = HttpStatus.CONFLICT.reasonPhrase
         return ResponseEntity.status(HttpStatus.CONFLICT).body(problemDetail)
-    }
-
-    @ExceptionHandler(BusinessException::class)
-    private fun handleBusinessException(ex: BusinessException): ResponseEntity<ProblemDetail> {
-        val problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.message)
-        problemDetail.title = HttpStatus.BAD_REQUEST.reasonPhrase
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problemDetail)
     }
 
     @ExceptionHandler(IllegalArgumentException::class)

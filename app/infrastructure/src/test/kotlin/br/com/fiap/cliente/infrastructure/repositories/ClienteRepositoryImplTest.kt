@@ -68,6 +68,46 @@ class ClienteRepositoryImplTest {
         verify(exactly = 1) { clienteJpaRepository.findByCpf(cpfSemMascara) }
     }
 
+    @Test
+    fun `deve buscar um cliente com base no id com sucesso`() {
+        //given
+        val cpf = VALID_CPF
+        val email = EMAIL
+        val clienteId = "1"
+        val nome = Random.nextLong().toString()
+        val cliente = Cliente(id = clienteId, cpf = Cpf(cpf), email = Email(email), nome = nome)
+
+        every { clienteJpaRepository.findById(any()) } returns Optional.of(ClienteEntity.fromModel(cliente))
+
+        //when
+        val result = clienteRepository.buscarPorId(clienteId.toLong())
+
+        //then
+        assertEquals(cliente, result.get())
+
+        verify(exactly = 1) { clienteJpaRepository.findById(clienteId.toLong()) }
+    }
+
+    @Test
+    fun `deve propagar BaseDeDadosException quando ocorrer uma falha ao buscar um cliente por id`() {
+        //given
+        val errorMessage = "Erro ao buscar o cliente na base de dados. Detalhes: Error"
+        val clienteId = "1"
+
+
+        every { clienteJpaRepository.findById(any()) } throws Exception("Error")
+
+        //when-then
+        val exception = Assertions.assertThrows(RuntimeException::class.java) {
+            clienteRepository.buscarPorId(clienteId.toLong())
+        }
+
+        //then
+        assertEquals(errorMessage, exception.message)
+
+        verify(exactly = 1) { clienteJpaRepository.findById(clienteId.toLong()) }
+    }
+
 
     @Test
     fun `deve propagar BaseDeDadosException quando ocorrer uma falha ao buscar um cliente`() {
