@@ -137,6 +137,7 @@ val includeCoverage = listOf(
 )
 
 val excludeCoverage = listOf(
+    "**/config/**",
     "**/models/**",
     "**/dtos/**",
     "**/enums/**",
