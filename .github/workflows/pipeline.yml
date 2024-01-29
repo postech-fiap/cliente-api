@@ -68,7 +68,7 @@ jobs:
         with:
           args: >
             -Dsonar.organization=postech-fiap
-            -Dsonar.projectKey=postech-fiap_fiap-gerenciamento-pedidos
+            -Dsonar.projectKey=postech-fiap_cliente-api
 
   docker-app-image:
     runs-on: ubuntu-latest
