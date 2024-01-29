@@ -108,7 +108,6 @@ tasks.withType<BootJar> {
     }
 }
 
-
 tasks.withType<BootRun> {
     group = "application"
     dependsOn(":app:api:bootRun")
