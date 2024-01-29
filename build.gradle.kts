@@ -137,14 +137,14 @@ val includeCoverage = listOf(
 )
 
 val excludeCoverage = listOf(
-    "**/config/**",
-    "**/models/**",
-    "**/dtos/**",
-    "**/enums/**",
-    "**/entities/**",
-    "**/exceptions/**",
-    "**/requests/**",
-    "**/responses/**"
+    "**/config/*",
+    "**/models/*",
+    "**/dtos/*",
+    "**/enums/*",
+    "**/entities/*",
+    "**/exceptions/*",
+    "**/requests/*",
+    "**/responses/*"
 )
 
 tasks.test {

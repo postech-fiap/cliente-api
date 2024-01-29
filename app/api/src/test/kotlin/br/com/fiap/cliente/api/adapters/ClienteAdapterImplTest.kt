@@ -64,6 +64,8 @@ class ClienteAdapterImplTest {
         assertEquals(cliente.id, result.id)
         assertEquals(cliente.nome, result.nome)
         assertEquals(cliente.cpf?.numero, result.cpf)
+        assertEquals(cliente.email?.endereco, result.email)
+
     }
 
     @Test
@@ -88,6 +90,8 @@ class ClienteAdapterImplTest {
         val result = target.buscarClientePorCpf(clienteRequest.cpf)
 
         assertNotNull(result)
+        assertEquals(cliente.id, result.id)
+        assertEquals(cliente.nome, result.nome)
         assertEquals(cliente.cpf?.numero, result.cpf)
-    }
+        assertEquals(cliente.email?.endereco, result.email)    }
 }
