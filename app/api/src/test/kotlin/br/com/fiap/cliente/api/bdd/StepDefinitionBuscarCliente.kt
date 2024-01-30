@@ -1,6 +1,5 @@
 package br.com.fiap.cliente.api.bdd
 
-import io.cucumber.java.Before
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 import io.restassured.RestAssured.given
@@ -10,7 +9,7 @@ import org.springframework.http.HttpStatus
 
 private const val ENDPOINT = "http://localhost:8080/clientes/cpf/"
 private const val VALID_CPF = "287.081.130-68"
-class StepDefinitionBuscarCliente {
+class StepDefinitionBuscarCliente : CucumberTest() {
 
 lateinit var response: Response
 
