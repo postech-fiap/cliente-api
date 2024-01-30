@@ -60,6 +60,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Run jacoco coverage
+        run: gradle jacocoTestReport
+
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
@@ -68,7 +77,10 @@ jobs:
         with:
           args: >
             -Dsonar.organization=postech-fiap
-            -Dsonar.projectKey=postech-fiap_fiap-gerenciamento-pedidos
+            -Dsonar.projectKey=postech-fiap_cliente-api
+            -Dsonar.token=${{env.sonar_token}}
+            -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
+            -Dsonar.sources=app/domain/src/main/kotlin,app/infrastructure/src/main/kotlin,app/api/src/main/kotlin
 
   docker-app-image:
     runs-on: ubuntu-latest

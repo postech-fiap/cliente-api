@@ -1,35 +1,21 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: db
+  name: cliente-api-mongo
   labels:
-    app: fiap-gerenciamento-pedidos-db
+    app: cliente-api-mongo
 spec:
   containers:
-    - name: db
-      image: mysql:8.0
+    - name: cliente-api-mongo
+      image: mongo:6.0.13
       ports:
-        - containerPort: 3306
+        - containerPort: 27017
       env:
-        - name: MYSQL_ROOT_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: db
-              key: username
-        - name: MYSQL_ROOT_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: db
-              key: password
-        - name: MYSQL_DB
-          valueFrom:
-            configMapKeyRef:
-              name: db
-              key: mysql.database
-      volumeMounts:
-        - mountPath: /docker-entrypoint-initdb.d/
-          name: migration
-  volumes:
-    - name: migration
-      configMap:
-        name: db-migration
+            - name: MONGO_DB_USERNAME
+              value: "root"
+            - name: MONGO_DB_ROOT_PASSWORD
+              value: "123"
+            - name: MONGO_DB_PORT
+              value: "27017"
+            - name: MONGO_DB_NAME
+              value: "clientedb"

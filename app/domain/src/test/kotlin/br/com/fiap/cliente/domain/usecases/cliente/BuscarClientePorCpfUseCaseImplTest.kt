@@ -36,7 +36,7 @@ class BuscarClientePorCpfUseCaseImplTest {
         val email = Email(EMAIL)
         val cliente = Cliente(cpf = cpf, nome = nome, email = email)
 
-        every { clientePort.buscarPorCpf(cliente.cpf!!.numero) } returns cliente
+        every { clientePort.buscarPorCpf(cliente.cpf!!.numero) } returns Optional.of(cliente)
 
         //when
         val result = buscarClientePorCpfUseCaseImpl.executar(cliente.cpf!!.numero)
@@ -55,7 +55,7 @@ class BuscarClientePorCpfUseCaseImplTest {
         val email = Email(EMAIL)
         val cliente = Cliente(cpf = cpf, nome = nome, email = email)
 
-        every { cliente.cpf?.let { clientePort.buscarPorCpf(it.numero) } } returns null
+        every { cliente.cpf?.let { clientePort.buscarPorCpf(it.numero) } } returns Optional.empty()
 
         //when-then
         val exception = Assertions.assertThrows(RecursoNaoEncontradoException::class.java) {

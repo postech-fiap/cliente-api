@@ -36,7 +36,7 @@ class CadastrarClienteUseCaseImplTest {
         val email = Email(EMAIL)
         val cliente = Cliente(cpf = cpf, nome = nome, email = email)
 
-        every { clienteRepository.buscarPorCpf(cpf.numero) } returns null
+        every { clienteRepository.buscarPorCpf(cpf.numero) } returns Optional.empty()
         every { clienteRepository.salvar(cliente) } returns cliente
 
         //when
@@ -57,7 +57,7 @@ class CadastrarClienteUseCaseImplTest {
         val email = Email(EMAIL)
         val cliente = Cliente(cpf = cpf, nome = nome, email = email)
 
-        every { clienteRepository.buscarPorCpf(cpf.numero) } returns cliente
+        every { clienteRepository.buscarPorCpf(cpf.numero) } returns Optional.of(cliente)
 
         //when-then
         val exception = Assertions.assertThrows(RecursoJaExisteException::class.java) {
@@ -101,7 +101,7 @@ class CadastrarClienteUseCaseImplTest {
         val cliente = Cliente(cpf = cpf, nome = nome, email = email)
         val errorMessage = "Erro na base de dados"
 
-        every { clienteRepository.buscarPorCpf(cpf.numero) } returns null
+        every { clienteRepository.buscarPorCpf(cpf.numero) } returns Optional.empty()
         every { clienteRepository.salvar(cliente) } throws RuntimeException(errorMessage)
 
         //when-then
