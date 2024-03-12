@@ -29,7 +29,7 @@ class CadastrarClienteUseCaseImplTest {
     lateinit var clienteRepository: ClienteRepository
 
     @Test
-    fun `deve cadastrar um cliente com sucesso quando ele não existir`() {
+    fun `deve cadastrar um cliente com sucesso quando ele nao existir`() {
         //given
         val cpf = Cpf(CPF)
         val nome = Random.nextLong().toString()
@@ -50,7 +50,7 @@ class CadastrarClienteUseCaseImplTest {
     }
 
     @Test
-    fun `não deve cadastrar um cliente quando ele já existir`() {
+    fun `nao deve cadastrar um cliente quando ele ja existir`() {
         //given
         val cpf = Cpf(CPF)
         val nome = Random.nextLong().toString()

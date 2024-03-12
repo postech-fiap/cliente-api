@@ -7,4 +7,6 @@ interface ClienteAdapter {
     fun cadastrarCliente(request: CadastrarClienteRequest): ClienteResponse
 
     fun buscarClientePorCpf(cpf: String): ClienteResponse
+
+    fun deletarClientePorCpf(cpf: String)
 }

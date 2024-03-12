@@ -18,7 +18,7 @@ class ClienteRepositoryImpl(private val clienteMongoRepository: ClienteMongoRepo
             return clienteMongoRepository.save(ClienteEntity.fromModel(cliente))
                 .toModel()
         } catch (ex: Exception) {
-            throw obterDataBaseException(ex, ERROR_MESSAGE_TO_SAVE)
+            throw dataBaseException(ex, ERROR_MESSAGE_TO_SAVE)
         }
     }
 
@@ -26,18 +26,26 @@ class ClienteRepositoryImpl(private val clienteMongoRepository: ClienteMongoRepo
         try {
             return clienteMongoRepository.findByCpf(Cpf.removeMascara(cpf)).map { it.toModel() }
         } catch (ex: Exception) {
-            throw obterDataBaseException(ex, ERROR_MESSAGE_TO_FIND)
+            throw dataBaseException(ex, ERROR_MESSAGE_TO_FIND)
         }
     }
 
-    override fun buscarPorId(id: Long): Optional<Cliente> {
+    override fun buscarPorId(id: String): Optional<Cliente> {
         try {
             return clienteMongoRepository.findById(id).map { it.toModel() }
         } catch (ex: Exception) {
-            throw obterDataBaseException(ex, ERROR_MESSAGE_TO_FIND)
+            throw dataBaseException(ex, ERROR_MESSAGE_TO_FIND)
         }
     }
 
-    private fun obterDataBaseException(ex: Exception, errorMessage: String) =
+    override fun deletePorId(id: String) {
+        try {
+            return clienteMongoRepository.deleteById(id)
+        } catch (ex: Exception) {
+            throw dataBaseException(ex, ERROR_MESSAGE_TO_FIND)
+        }
+    }
+
+    private fun dataBaseException(ex: Exception, errorMessage: String) =
         BaseDeDadosException(String.format(errorMessage, ex.message))
 }

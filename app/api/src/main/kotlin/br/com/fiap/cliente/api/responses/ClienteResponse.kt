@@ -7,4 +7,6 @@ class ClienteResponse(cliente: Cliente) {
     val cpf = cliente.cpf?.numero
     val nome = cliente.nome
     val email = cliente.email?.endereco
+    val telefone = cliente.telefone
+    val endereco = cliente.endereco
 }

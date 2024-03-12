@@ -5,12 +5,15 @@ import br.com.fiap.cliente.api.adapters.interfaces.ClienteAdapter
 import br.com.fiap.cliente.api.requests.CadastrarClienteRequest
 import br.com.fiap.cliente.api.responses.ClienteResponse
 import br.com.fiap.cliente.domain.models.Cliente
+import br.com.fiap.cliente.domain.models.Endereco
+import br.com.fiap.cliente.domain.models.Estado
 import br.com.fiap.cliente.domain.valueobjects.Cpf
 import br.com.fiap.cliente.domain.valueobjects.Email
 import com.ninjasquad.springmockk.MockkBean
 import io.mockk.every
 import org.junit.jupiter.api.Test
 import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 
@@ -26,7 +29,6 @@ class ClienteControllerTest : IntegrationTest() {
     @MockkBean
     lateinit var clienteAdapter: ClienteAdapter
 
-
     @Test
     fun `deve retornar erro ao tentar salvar um cliente com cpf invalido`() {
 
@@ -34,7 +36,9 @@ class ClienteControllerTest : IntegrationTest() {
         val clienteRequest = CadastrarClienteRequest(
             nome = "João",
             cpf = INVALID_CPF,
-            email = EMAIL_TEST
+            email = EMAIL_TEST,
+            telefone = "123456789",
+            endereco = Endereco("Rua teste", "123", "Bairro teste", "Cidade teste", "Estado teste", Estado.ES)
         )
 
         //when
@@ -55,7 +59,9 @@ class ClienteControllerTest : IntegrationTest() {
         val clienteRequest = CadastrarClienteRequest(
             nome = "João",
             cpf = VALID_CPF,
-            email = ""
+            email = "",
+            telefone = "123456789",
+            endereco = Endereco("Rua teste", "123", "Bairro teste", "Cidade teste", "Estado teste", Estado.ES)
         )
 
         //when
@@ -77,7 +83,9 @@ class ClienteControllerTest : IntegrationTest() {
         val clienteRequest = CadastrarClienteRequest(
             nome = "João",
             cpf = VALID_CPF,
-            email = "x-1234@gmail.com"
+            email = "x-1234@gmail.com",
+            telefone = "123456789",
+            endereco = Endereco("Rua teste", "123", "Bairro teste", "Cidade teste", "Estado teste", Estado.ES)
         )
 
         //when
@@ -99,7 +107,9 @@ class ClienteControllerTest : IntegrationTest() {
         val clienteRequest = CadastrarClienteRequest(
             nome = "João",
             cpf = VALID_CPF,
-            email = EMAIL_TEST
+            email = EMAIL_TEST,
+            telefone = "123456789",
+            endereco = Endereco("Rua teste", "123", "Bairro teste", "Cidade teste", "Estado teste", Estado.ES)
         )
 
         val cliente = ClienteResponse(
@@ -108,7 +118,8 @@ class ClienteControllerTest : IntegrationTest() {
                 nome = "João",
                 cpf = Cpf(VALID_CPF),
                 email = Email(EMAIL_TEST)
-            ))
+            )
+        )
 
         every { clienteAdapter.cadastrarCliente(clienteRequest) } returns cliente
 
@@ -134,7 +145,9 @@ class ClienteControllerTest : IntegrationTest() {
         val clienteRequest = CadastrarClienteRequest(
             nome = "João",
             cpf = VALID_CPF,
-            email = EMAIL_TEST
+            email = EMAIL_TEST,
+            telefone = "123456789",
+            endereco = Endereco("Rua teste", "123", "Bairro teste", "Cidade teste", "Estado teste", Estado.ES)
         )
 
         val cliente = ClienteResponse(
@@ -168,7 +181,9 @@ class ClienteControllerTest : IntegrationTest() {
         val clienteRequest = CadastrarClienteRequest(
             nome = "João",
             cpf = VALID_CPF,
-            email = EMAIL_TEST
+            email = EMAIL_TEST,
+            telefone = "123456789",
+            endereco = Endereco("Rua teste", "123", "Bairro teste", "Cidade teste", "Estado teste", Estado.ES)
         )
 
         //when-then
@@ -179,6 +194,29 @@ class ClienteControllerTest : IntegrationTest() {
             .andExpect {
                 status { is5xxServerError() }
 
+            }
+    }
+
+    @Test
+    fun `deve deletar um cliente por CPF com sucesso`() {
+        //given
+        val clienteRequest = CadastrarClienteRequest(
+            nome = "João",
+            cpf = VALID_CPF,
+            email = EMAIL_TEST,
+            telefone = "123456789",
+            endereco = Endereco("Rua teste", "123", "Bairro teste", "Cidade teste", "Estado teste", Estado.ES)
+        )
+
+        every { clienteAdapter.deletarClientePorCpf(clienteRequest.cpf) } returns Unit
+
+        //when-then
+        mockMvc.delete("/clientes/cpf/$VALID_CPF") {
+            contentType = MediaType.APPLICATION_JSON
+            content = objectMapper.writeValueAsString(clienteRequest)
+        }
+            .andExpect {
+                status { isOk() }
             }
     }
 }

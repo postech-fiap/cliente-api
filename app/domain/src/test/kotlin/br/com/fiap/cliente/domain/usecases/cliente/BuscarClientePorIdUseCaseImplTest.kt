@@ -31,7 +31,7 @@ class BuscarClientePorIdUseCaseImplTest {
     @Test
     fun `deve retornar um cliente por cpf quando existir`() {
         //given
-        val id = 1L
+        val id = "1L"
         val cpf = Cpf(CPF)
         val nome = Random.nextLong().toString()
         val email = Email(EMAIL)
@@ -51,7 +51,7 @@ class BuscarClientePorIdUseCaseImplTest {
     @Test
     fun `deve propagar um erro não encontrado quando o cliente não existir`() {
         //given
-        val id = 1L
+        val id = "1L"
         val cpf = Cpf(CPF)
         val nome = Random.nextLong().toString()
         val email = Email(EMAIL)
@@ -72,7 +72,7 @@ class BuscarClientePorIdUseCaseImplTest {
     @Test
     fun `deve propagar erro quando ocorrer falha ao buscar o cliente`() {
         //given
-        val id = 1L
+        val id = "1L"
         val cpf = Cpf(CPF)
         val nome = Random.nextLong().toString()
         val email = Email(EMAIL)
