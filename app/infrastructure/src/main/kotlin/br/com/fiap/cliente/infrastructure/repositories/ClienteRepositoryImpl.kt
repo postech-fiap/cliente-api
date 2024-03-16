@@ -10,6 +10,8 @@ import java.util.*
 
 private const val ERROR_MESSAGE_TO_SAVE = "Erro ao salvar o cliente na base de dados. Detalhes: %s"
 private const val ERROR_MESSAGE_TO_FIND = "Erro ao buscar o cliente na base de dados. Detalhes: %s"
+private const val ERROR_MESSAGE_TO_DELETE = "Erro ao deletar o cliente na base de dados. Detalhes: %s"
+
 
 class ClienteRepositoryImpl(private val clienteMongoRepository: ClienteMongoRepository) : ClienteRepository {
 
@@ -42,7 +44,7 @@ class ClienteRepositoryImpl(private val clienteMongoRepository: ClienteMongoRepo
         try {
             return clienteMongoRepository.deleteById(id)
         } catch (ex: Exception) {
-            throw dataBaseException(ex, ERROR_MESSAGE_TO_FIND)
+            throw dataBaseException(ex, ERROR_MESSAGE_TO_DELETE)
         }
     }
 
