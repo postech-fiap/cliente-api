@@ -60,21 +60,4 @@ class NotificarClienteUseCaseImplTest {
         verify(exactly = 1) { clienteRepository.buscarPorId(notificar.idCliente) }
 
     }
-
-
-    @Test
-    fun `dado uma nova atualizacao de pedido de um usuario nao cadastrado nao deve notificar`() {
-        //given
-        val notificar = Notificar("1234556", "10", "05", "APROVADO")
-
-        every { clienteRepository.buscarPorId(notificar.idCliente) } throws RuntimeException("Error")
-
-        //then
-        target.executar(notificar)
-
-        //when
-
-        verify(exactly = 1) { clienteRepository.buscarPorId(notificar.idCliente) }
-
-    }
 }

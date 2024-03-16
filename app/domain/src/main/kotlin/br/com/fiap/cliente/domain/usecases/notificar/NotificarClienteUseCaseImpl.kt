@@ -7,17 +7,11 @@ import br.com.fiap.cliente.domain.models.Notificar
 
 class NotificarClienteUseCaseImpl(private val repository: ClienteRepository) : NotificarClienteUseCase {
     override fun executar(notificar: Notificar) {
-        try {
-            return repository.buscarPorId(notificar.idCliente)
-                .let { cliente ->
-                    val message = buscarMensagem(cliente.get(), notificar)
-                    enviarEmail(cliente.get().email?.endereco, message)
-                }
-        } catch (ex: Exception) {
-            println("Usuario não cadastrado, notificação não enviada")
-
-        }
-
+        return repository.buscarPorId(notificar.idCliente)
+            .let { cliente ->
+                val message = buscarMensagem(cliente.get(), notificar)
+                enviarEmail(cliente.get().email?.endereco, message)
+            }
     }
 
     private fun buscarMensagem(cliente: Cliente, notificar: Notificar): String {
