@@ -5,6 +5,7 @@ import br.com.fiap.cliente.api.requests.CadastrarClienteRequest
 import io.swagger.v3.oas.annotations.Parameter
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -28,4 +29,11 @@ class ClienteController(private val clienteAdapter: ClienteAdapter) {
         @Parameter(name = "cpf", description = "CPF do cliente", example = "43253353425")
         cpf: String
     ) = ResponseEntity.status(HttpStatus.OK).body(clienteAdapter.buscarClientePorCpf(cpf))
+
+    @DeleteMapping("$CPF_URI/{cpf}")
+    fun deletarClientePorCpf(
+        @PathVariable("cpf")
+        @Parameter(name = "cpf", description = "CPF do cliente", example = "43253353425")
+        cpf: String
+    ) = ResponseEntity.status(HttpStatus.OK).body(clienteAdapter.deletarClientePorCpf(cpf))
 }

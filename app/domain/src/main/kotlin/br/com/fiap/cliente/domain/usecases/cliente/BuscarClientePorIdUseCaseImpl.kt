@@ -5,6 +5,6 @@ import br.com.fiap.cliente.domain.exceptions.RecursoNaoEncontradoException
 import br.com.fiap.cliente.domain.interfaces.ClienteRepository
 
 class BuscarClientePorIdUseCaseImpl(private val clienteRepository: ClienteRepository) : BuscarClientePorIdUseCase {
-    override fun executar(id: Long) = clienteRepository.buscarPorId(id)
+    override fun executar(id: String) = clienteRepository.buscarPorId(id)
         .orElseThrow { RecursoNaoEncontradoException("Cliente não encontrado") }
 }

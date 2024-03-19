@@ -85,10 +85,10 @@ class ClienteRepositoryImplTest {
         val nome = Random.nextLong().toString()
         val cliente = Cliente(id = clienteId, cpf = Cpf(cpf), email = Email(email), nome = nome)
 
-        every { clienteJpaRepository.findById(any()) } returns Optional.of(ClienteEntity.fromModel(cliente))
+        every { clienteJpaRepository.findById(clienteId) } returns Optional.of(ClienteEntity.fromModel(cliente))
 
         //when
-        val result = clienteRepository.buscarPorId(clienteId.toLong())
+        val result = clienteRepository.buscarPorId(clienteId)
 
         //then
         assertEquals(cliente, result.get())
@@ -98,7 +98,7 @@ class ClienteRepositoryImplTest {
         assertEquals(cliente.email, result.get().email)
 
 
-        verify(exactly = 1) { clienteJpaRepository.findById(clienteId.toLong()) }
+        verify(exactly = 1) { clienteJpaRepository.findById(clienteId) }
     }
 
     @Test
@@ -108,17 +108,17 @@ class ClienteRepositoryImplTest {
         val clienteId = "1"
 
 
-        every { clienteJpaRepository.findById(any()) } throws Exception("Error")
+        every { clienteJpaRepository.findById(clienteId) } throws Exception("Error")
 
         //when-then
         val exception = Assertions.assertThrows(RuntimeException::class.java) {
-            clienteRepository.buscarPorId(clienteId.toLong())
+            clienteRepository.buscarPorId(clienteId)
         }
 
         //then
         assertEquals(errorMessage, exception.message)
 
-        verify(exactly = 1) { clienteJpaRepository.findById(clienteId.toLong()) }
+        verify(exactly = 1) { clienteJpaRepository.findById(clienteId) }
     }
 
 
@@ -163,6 +163,31 @@ class ClienteRepositoryImplTest {
         assertEquals(errorMessage, exception.message)
 
         verify(exactly = 1) { clienteJpaRepository.save(clienteEntity) }
+    }
+
+    @Test
+    fun `deve deletar cliente por id com sucesso`() {
+        val clienteId = "123456"
+
+        every { clienteJpaRepository.deleteById(clienteId) } returns Unit
+
+        clienteRepository.deletePorId(clienteId)
+
+        verify(exactly = 1) { clienteJpaRepository.deleteById(clienteId) }
+    }
+
+    @Test
+    fun `deve retornar erro ao tentar deleter usuario com sucesso`() {
+        val clienteId = "123456"
+
+        every { clienteJpaRepository.deleteById(clienteId) } throws Exception("Error")
+
+        val exception = Assertions.assertThrows(RuntimeException::class.java) {
+            clienteRepository.deletePorId(clienteId)
+        }
+
+        assertEquals("Erro ao deletar o cliente na base de dados. Detalhes: Error",exception.message)
+        verify(exactly = 1) { clienteJpaRepository.deleteById(clienteId) }
     }
 
 }

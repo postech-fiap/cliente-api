@@ -2,6 +2,7 @@ dependencies {
     implementation(project(":app:domain"))
     implementation(project(":app:infrastructure"))
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
     testImplementation("io.mockk:mockk:1.13.5")
     testImplementation("com.ninja-squad:springmockk:4.0.2")
     testImplementation("io.cucumber:cucumber-java:7.15.0")

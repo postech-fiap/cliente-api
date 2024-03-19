@@ -4,7 +4,10 @@ import br.com.fiap.cliente.api.requests.CadastrarClienteRequest
 import br.com.fiap.cliente.domain.interfaces.ClienteRepository
 import br.com.fiap.cliente.domain.interfaces.usecases.cliente.BuscarClientePorCpfUseCase
 import br.com.fiap.cliente.domain.interfaces.usecases.cliente.CadastrarClienteUseCase
+import br.com.fiap.cliente.domain.interfaces.usecases.cliente.DeletarClientePorCpfUseCase
 import br.com.fiap.cliente.domain.models.Cliente
+import br.com.fiap.cliente.domain.models.Endereco
+import br.com.fiap.cliente.domain.models.Estado
 import br.com.fiap.cliente.domain.valueobjects.Cpf
 import br.com.fiap.cliente.domain.valueobjects.Email
 import io.mockk.every
@@ -33,19 +36,26 @@ class ClienteAdapterImplTest {
     @MockK
     lateinit var buscarClienteUseCase: BuscarClientePorCpfUseCase
 
+    @MockK
+    lateinit var deletarClienteUseCase: DeletarClientePorCpfUseCase
+
     @BeforeEach
     fun init() {
         target = ClienteAdapterImpl(
             cadastrarClienteUseCase,
-            buscarClienteUseCase)
+            buscarClienteUseCase,
+            deletarClienteUseCase)
     }
+
     @Test
     fun `deve cadastrar um cliente com sucesso`() {
 
         val clienteRequest = CadastrarClienteRequest(
             nome = "João",
             cpf = VALID_CPF,
-            email = EMAIL_TEST
+            email = EMAIL_TEST,
+            telefone = "123456789",
+            endereco = Endereco("Rua teste", "123", "Bairro teste", "Cidade teste", "Estado teste", Estado.ES)
         )
 
         val cliente = Cliente(
@@ -74,7 +84,9 @@ class ClienteAdapterImplTest {
         val clienteRequest = CadastrarClienteRequest(
             nome = "João",
             cpf = VALID_CPF,
-            email = EMAIL_TEST
+            email = EMAIL_TEST,
+            telefone = "123456789",
+            endereco = Endereco("Rua teste", "123", "Bairro teste", "Cidade teste", "Estado teste", Estado.ES)
         )
 
         val cliente = Cliente(
@@ -93,5 +105,23 @@ class ClienteAdapterImplTest {
         assertEquals(cliente.id, result.id)
         assertEquals(cliente.nome, result.nome)
         assertEquals(cliente.cpf?.numero, result.cpf)
-        assertEquals(cliente.email?.endereco, result.email)    }
+        assertEquals(cliente.email?.endereco, result.email)
+    }
+
+    @Test
+    fun `deve deletar um cliente com sucesso`() {
+        val cliente = Cliente(
+            "1",
+            nome = "João",
+            cpf = Cpf(VALID_CPF),
+            email = Email(EMAIL_TEST)
+        )
+
+        every { clienteRepository.buscarPorCpf(any()) } returns Optional.of(cliente)
+        every { deletarClienteUseCase.executar(any()) } returns Unit
+
+        val result = target.deletarClientePorCpf(VALID_CPF)
+
+        assertNotNull(result)
+    }
 }

@@ -39,17 +39,17 @@ data class Cpf(val numero: String) {
     fun removeMascara() = removeMascara(numero)
 
     companion object {
-        fun removeMascara(numero: String) =
-            numero.replace(".", "").replace("-", "")
+        fun removeMascara(numero: String?) =
+            numero?.replace(".", "")?.replace("-", "")
 
-        fun adicionaMascara(cpf: String): String {
+        fun adicionaMascara(cpf: String?): String {
             val cpfSemMascara = removeMascara(cpf)
-            require(cpfSemMascara.length == 11) { "CPF com tamanho inválido!" }
+            require(cpfSemMascara?.length == 11) { "CPF com tamanho inválido!" }
 
-            return cpfSemMascara.substring(0, 3) +
-                    "." + cpfSemMascara.substring(3, 6) +
-                    "." + cpfSemMascara.substring(6, 9) +
-                    "-" + cpfSemMascara.substring(9, 11)
+            return cpfSemMascara?.substring(0, 3) +
+                    "." + cpfSemMascara?.substring(3, 6) +
+                    "." + cpfSemMascara?.substring(6, 9) +
+                    "-" + cpfSemMascara?.substring(9, 11)
         }
     }
 
